@@ -19,6 +19,11 @@ const routes: Routes = [
         path: 'account',
         loadChildren: './account/account.module#AccountModule',
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'webmana',
+        loadChildren: './webmana/webmana.module#WebmanaModule',
+        canActivate: [AuthGuard]
       }
     ]
   },

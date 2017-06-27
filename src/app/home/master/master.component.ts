@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-master',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class MasterComponent implements OnInit {
+
+  @Input()
+  class = 'wrapper';
 
   constructor() { }
 
