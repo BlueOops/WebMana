@@ -9,7 +9,7 @@ export class MasterComponent implements OnInit {
 
   @Input()
   class = 'wrapper';
-
+  systemName = '網站平台維護';
   constructor() { }
 
   ngOnInit() {

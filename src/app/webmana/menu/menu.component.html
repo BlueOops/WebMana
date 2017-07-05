@@ -1,14 +1,133 @@
 <app-wm-aside></app-wm-aside>
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>網站節點設定</h1>
-    <small></small>
-    <div class="breadcrumb">麵包屑</div>
-  </section>
-  <section class="content">
-    內容開始
-    <div class="box">
-      BOX框
-    </div>
-  </section>
+    <section class="content-header">
+        <h1>網站節點設定</h1>
+        <small></small>
+        <div class="breadcrumb">麵包屑</div>
+    </section>
+    <section class="content">
+        內容開始
+        <div class="box">
+            <div class="title">
+                <h3 class="T_name"><i class="fa fa-server" aria-hidden="true"></i>網站選單管理
+
+                    <ng-template #popContent>
+                        <div class="qqq" style="display:inline-block;">
+                            <button type="button" class="btn btn-info" (click)="NewPage('WebPage')">自訂網頁</button>
+                            <button type="button" class="btn btn-info" (click)="NewPage('WebPageGroup')">自訂網頁群組</button>
+                            <button type="button" class="btn btn-info" (click)="NewPage('DocsGroup')">表單下載群組</button>
+                            <button type="button" class="btn btn-info" (click)="NewPage('NewsGroup')">最新消息群組</button>
+                            <button type="button" class="btn btn-info" (click)="NewPage('GallaryGroup')">相簿群組</button>
+                            <button type="button" class="btn btn-info" (click)="NewPage('OuterUrl')">外部連結</button>
+                        </div>
+                    </ng-template>
+                    <button type="button" placement="right" [ngbPopover]="popContent" #p="ngbPopover" class="btn btn-sm btn-success">新增</button>
+                </h3>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-heading" role="tab" id="headingOne282" *ngFor="let item of data; let i=index">
+                    <h4 class="panel-title animate3s_all">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#{{item.IDNo}}" aria-expanded="false" aria-controls="collapseOne" class="collapsed animate3s_all">
+                            <i class="fa fa-arrow-down animate3s_all" aria-hidden="true"></i>{{item.Title}}</a>
+                        <ng-template #popContent>
+                            <div class="qqq" style="display:inline-block;">
+                                <button type="button" class="btn btn-info" (click)="NewPage('WebPage',item.IDNo)">自訂網頁</button>
+                                <button type="button" class="btn btn-info" (click)="NewPage('WebPageGroup',item.IDNo)">自訂網頁群組</button>
+                                <button type="button" class="btn btn-info" (click)="NewPage('DocsGroup',item.IDNo)">表單下載群組</button>
+                                <button type="button" class="btn btn-info" (click)="NewPage('NewsGroup',item.IDNo)">最新消息群組</button>
+                                <button type="button" class="btn btn-info" (click)="NewPage('GallaryGroup',item.IDNo)">相簿群組</button>
+                                <button type="button" class="btn btn-info" (click)="NewPage('OuterUrl',item.IDNo)">外部連結</button>
+                            </div>
+                        </ng-template>
+                        <button type="button" class="btn btn-sm btn-primary" (click)="FixPage(item.IDNo);">編輯</button>
+                        <button type="button" placement="right" [ngbPopover]="popContent" #p="ngbPopover" class="btn btn-sm btn-success">新增</button>
+                    </h4>
+                    <div id="{{item.IDNo}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked sub_menu">
+                                <div class="panel-heading" role="tab" id="headingOne485" *ngFor="let subitem of item.MenuRef">
+                                    <h4 class="panel-title animate3s_all">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#{{subitem.IDNo}}" aria-expanded="false" aria-controls="collapseOne" class="collapsed animate3s_all">
+                                            <i class="fa fa-arrow-down animate3s_all" aria-hidden="true"></i>{{subitem.Title}} </a>
+                                        <ng-template #popContent>
+                                            <div class="qqq" style="display:inline-block;">
+
+                                                <button type="button" class="btn btn-info" (click)="NewPage('WebPage',subitem.IDNo)">自訂網頁</button>
+                                                <button type="button" class="btn btn-info" (click)="NewPage('WebPageGroup',subitem.IDNo)">自訂網頁群組</button>
+                                                <button type="button" class="btn btn-info" (click)="NewPage('DocsGroup',subitem.IDNo)">表單下載群組</button>
+                                                <button type="button" class="btn btn-info" (click)="NewPage('NewsGroup',subitem.IDNo)">最新消息群組</button>
+                                                <button type="button" class="btn btn-info" (click)="NewPage('GallaryGroup',subitem.IDNo)">相簿群組</button>
+                                                <button type="button" class="btn btn-info" (click)="NewPage('OuterUrl',subitem.IDNo)">外部連結</button>
+                                            </div>
+                                        </ng-template>
+                                        <button type="button" class="btn-sm btn-success" (click)="FixPage(subitem.IDNo);">編輯</button>
+                                        <!--<button type="button" placement="right" [ngbPopover]="popContent" #p="ngbPopover" class="btn btn-sm btn-success">新增</button>-->
+                                    </h4>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
 </div>
+<form name="form" (ngSubmit)="f.form.valid && Send()" #f="ngForm">
+    <div class="modal fade-out" id="MO" style="background-color: rgba(0, 0, 0, 0.8); display: none;" aria-hidden="false">
+        <div class="modal-dialog" style="width:50vw">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" (click)="ModalControll('fade')"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                </div>
+                <!--style="position: relative; width: 100%; height: 50vh;overflow-y:scroll"-->
+                <div class="modal-body" style="position: relative; width: 100%; height: 100%;">
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !Title.valid }">
+                                <label for="Title">選單名稱:</label>
+                                <input type="text" class="form-control" name="Title" [(ngModel)]="model.Title" #Title="ngModel" required />
+                                <div *ngIf="f.submitted && !Title.valid" class="help-block">Title is required</div>
+                            </div>
+                            <div class="form-group" *ngIf="NewPageType === 'OuterUrl'" [ngClass]="{ 'has-error': f.submitted && !Href.valid }">
+                                <label for="Href">選單路徑:</label>
+                                <input type="text" class="form-control" name="Href" [(ngModel)]="model.Href" #Href="ngModel" required />
+                                <div *ngIf="f.submitted && !Href.valid" class="help-block">Href is required</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="IsRoot">是否顯示:</label>
+                                <select name="IsRoot" class="form-control" #IsRoot="ngModel" [(ngModel)]="model.IsRoot" [ngClass]="{ 'has-error': f.submitted && !IsRoot.valid }">
+                                  <option value="0">是</option>
+                                  <option value="1">否</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="IsOpen">是否開啟分頁:</label>
+                                <select name="IsOpen" class="form-control" [(ngModel)]="model.Target" [ngClass]="{ 'has-error': f.submitted && !Target.valid }" #Target="ngModel">
+                                  <option value="_blank">是</option>
+                                  <option value="_self">否</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align: center">
+                        <button *ngIf="Action === 'New'" [disabled]="loading" class="btn btn-primary">新增</button>
+                        <button *ngIf="Action === 'Fix'" [disabled]="loading" class="btn btn-primary">修改</button>
+                        <button *ngIf="Action === 'Fix'" [disabled]="loading" class="btn btn-danger" (click)="DeleteMenu()">刪除</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>

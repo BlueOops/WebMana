@@ -3,8 +3,18 @@
   <section class="sidebar">
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-      選單在這裡
+      <li class="treeview" *ngFor="let item of data; let i=index">
+        <a href="#">    <i class="fa fa-globe expandOpen"></i>
+        <span>{{item.Title}}</span>  <i class="fa fa-angle-left pull-right expandOpen"></i></a>
+        <ul class="treeview-menu" style="display: none;">
+          <li *ngFor="let subitem of item.MenuRef">
+            <a [href]="subitem.Href" [target]="subitem.Target">
+              <i class="fa fa-laptop expandOpen"></i> {{subitem.Title}}</a>
+           /li&gt; </li>
+        </ul>
+      </li>
     </ul>
+
   </section>
   <!-- /.sidebar -->
 </aside>

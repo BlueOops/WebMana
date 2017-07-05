@@ -10,11 +10,16 @@ export class UserService {
   constructor(private http: Http, private comm: Comm) { }
 
   postLogin(logindata: LoginData): Observable<any> {
-    return this.http.post('/assets/login.json', logindata);
+    return this.http.post('/websiteapi_back/login', logindata);
   }
 
   checkLogin(): Observable<any> {
-    return this.http.get('/assets/login.json');
+    return this.http.get('/websiteapi_back/login');
   }
+
+  GetMenu(): Observable<any> {
+    return this.http.get('/websiteapi_back/Menu');
+  }
+
 
 }

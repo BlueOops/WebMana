@@ -5,6 +5,6 @@ export interface Member {
 }
 
 export interface LoginData {
-  uid: number,
+  uid: string,
   pwd: string
 }

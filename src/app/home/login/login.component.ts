@@ -1,27 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../_comm/user.service';
 import { LoginData } from '../../_models/member';
+import { Http, Headers } from '@angular/http';
+import { Observable } from "rxjs/Rx";
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styles: []
+  moduleId: module.id,
+  templateUrl: 'login.component.html'
 })
+
 export class LoginComponent implements OnInit {
-
-  constructor(private userApi: UserService) { }
-
-  chk: any;
+  model: any = {};
+  loading = false;
+  returnUrl: string;
   data: LoginData;
+  constructor(
+    private userApi: UserService,
+    private route: ActivatedRoute,
+    private router: Router, ) { }
+
   ngOnInit() {
-    this.userApi.checkLogin().subscribe(data => this.chk = data);
-
-
+    // reset login status
+    //  this.authenticationService.logout();
+    this.userApi.checkLogin().subscribe(res2 => {
+      console.log(res2.json())
+    });
   }
 
-  doLogin() {
+  login() {
+    console.log('Start');
+    this.loading = true;
+    //this.data = { uid: "admin", pwd: "1234" };
+    this.data = { uid: this.model.username, pwd: this.model.password };
+    this.userApi.postLogin(this.data)
+      .subscribe(
+      data => {
+        // this.loading = true;
+          console.log(data['_body']);
+        this.router.navigate(['/webmana']);
 
-    this.userApi.postLogin(this.data).subscribe(data => this.chk = data);
-
+      },
+      error => {
+        //this.alertService.error(error);
+        console.log(error);
+        this.loading = false;
+      });
   }
 }

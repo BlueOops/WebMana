@@ -1,4 +1,9 @@
+import { Menu } from './../../_models/summary';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../_comm/user.service';
+import { Http, Headers } from '@angular/http';
+import { Observable } from "rxjs/Rx";
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-wm-aside',
@@ -7,9 +12,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WmAsideComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private userApi: UserService,
+    private route: ActivatedRoute,
+    private router: Router, ) { }
+  data: Menu;
 
   ngOnInit() {
+   this.userApi.GetMenu().subscribe(res => {
+      this.data = res.json();
+      //console.log(res.json())
+    });
   }
 
 }

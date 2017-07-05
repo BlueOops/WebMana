@@ -1,0 +1,148 @@
+<app-wm-aside></app-wm-aside>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>{{PageTitle}}</h1>
+        <small></small>
+        <div class="breadcrumb">麵包屑</div>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="panel panel-default">
+
+                <div class="panel-body" *ngIf=" this.PageType === 'Group'">
+                    <form name="form" (ngSubmit)="f.form.valid && Send()" #f="ngForm" novalidate>
+                        <div class="form-group col-sm-5" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                            <label for="username">群組名稱</label>
+                            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+                            <div *ngIf="f.submitted && !username.valid" class="help-block">請填入群組名稱</div>
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <button [disabled]="loading" class="btn btn-primary">儲存</button>
+                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body" *ngIf=" this.PageType !== 'Group'">
+                    <form name="form" (ngSubmit)="f.form.valid && Send()" #f="ngForm" novalidate>
+                        <div class="form-group col-sm-12">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a rel="nofollow" rel="noreferrer" href="#home" aria-controls="home" role="tab" data-toggle="tab">ˊ主要</a></li>
+                                <li role="presentation"><a rel="nofollow" rel="noreferrer" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">次要</a></li>
+
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !Title.valid }">
+                                        <div class="col-sm-10">
+                                            <label for="Title">群組:</label>
+                                            <select name="Ref" class="form-control" #Href="ngModel" [(ngModel)]="model.CateID">
+                                                <option *ngFor="let item of groupList; let i=index" [value]="item.IDNo">{{item.Cate_Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !Title.valid }">
+                                        <div class="col-sm-10">
+                                            <label for="Title">內頁標題:</label>
+                                            <input type="text" class="form-control" name="Title" [(ngModel)]="model.Title" #Title="ngModel" required />
+                                            <div *ngIf="f.submitted && !Title.valid" class="help-block">請輸入標題</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !Html.valid }">
+                                        <div class="col-sm-10">
+                                            <label for="Html">內文編輯</label>
+                                            <textarea type="text" class="form-control" name="Html" [(ngModel)]="model.Html" #Html="ngModel" required></textarea>
+                                            <div *ngIf="f.submitted && !Html.valid" class="help-block">請輸入內文</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="profile">
+                                    <!--   <div class="form-group">
+                                        <label for="DDLTheme">主題分類:</label>
+                                        <select name="DDLTheme" id="DDLTheme" class="form-control" [(ngModel)]="model.Theme" #Theme="ngModel" style="width:160px;" [ngClass]="{ 'has-error': f.submitted && !Theme.valid }">
+	                                <option selected="selected" value="請選擇">請選擇</option>
+	                                <option value="610">交通運輸</option>
+	                                <option value="640">資訊傳播</option>
+	                                <option value="340">政風</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DDLCake">施政分類:</label>
+                                        <select name="DDLCake" id="DDLCake" class="form-control" style="width:160px;" [(ngModel)]="model.Cake" #Cake="ngModel" [ngClass]="{ 'has-error': f.submitted && !Cake.valid }">
+	                                <option selected="selected" value="請選擇">請選擇</option>
+	                                	<option value="812">公路</option>
+	                                	<option value="J40">資訊</option>
+	                                	<option value="J60">政風</option>
+	                                	<option value="851">道路交通安全</option>
+	                                	<option value="852">交通安全教育</option>
+	                                	<option value="853">交通安全宣導</option>
+	                                </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DDLService">服務分類:</label>
+                                        <select name="DDLService" id="DDLService" class="form-control" style="width:160px;" [(ngModel)]="model.Service" #Service="ngModel" [ngClass]="{ 'has-error': f.submitted && !Service.valid }">
+		                                	<option selected="selected" value="請選擇">請選擇</option>
+		                                	<option value="A23">客運公車</option>
+		                                	<option value="A29">交通違規</option>
+		                                	<option value="A2Z">公路運輸其他</option>
+		                                	<option value="A51">汽機車考照</option>
+		                                	<option value="A52">汽機車行照及駕照</option>
+		                                	<option value="A54">使用牌照稅及燃料稅</option>
+		                                	<option value="A5Z">監理其他</option>
+		                                	<option value="I61">資訊服務入口網</option>
+		                                	<option value="I6Z">資訊服務其他</option>
+		                                	<option value="IZ0">公共資訊其他</option>
+		                                	<option value="A61">通訊傳播</option>
+		                                	<option value="A6Z">通訊電信其他</option>
+		                                	<option value="AZ0">其他</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !T_Subject.valid }">
+                                        <label for="T_Subject">主旨:</label>
+                                        <input type="text" class="form-control" name="T_Subject" [(ngModel)]="model.T_Subject" #T_Subject="ngModel" required />
+                                        <div *ngIf="f.submitted && !T_Subject.valid" class="help-block">請輸入主旨</div>
+                                    </div>
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !T_Subject.valid }">
+                                        <label for="T_Des">內容介紹:</label>
+                                        <input type="text" class="form-control" name="T_Des" [(ngModel)]="model.T_Des" #T_Des="ngModel" required />
+                                        <div *ngIf="f.submitted && !T_Des.valid" class="help-block">請輸入內容介紹</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DDL_Type">資料類型:</label>
+                                        <select name="DDL_Type" id="DDL_Type" class="form-control" style="width:160px;" [(ngModel)]="model.Type" #Type="ngModel" [ngClass]="{ 'has-error': f.submitted && !Type.valid }">
+                                <option selected="selected" value="">請選擇</option>
+                                <option value="服務">服務</option>
+                                <option value="宣導">宣導</option>
+                                <option value="說明">說明</option>
+                                <option value="公告">公告</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !T_Subject.valid }">
+                                        <label for="T_keywords">關鍵字:</label>
+                                        <textarea name="T_keywords" rows="2" cols="20" id="T_keywords" class="form-control" style="height:150px;width:100%;" [(ngModel)]="model.T_keywords" #T_keywords="ngModel" required></textarea>
+                                        <div *ngIf="f.submitted && !T_Des.valid" class="help-block">請輸入關鍵字</div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="" style="text-align: center">
+                            <button [disabled]="loading" class="btn btn-primary">儲存</button>
+                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -4,11 +4,11 @@
     <!-- Logo -->
     <a routerLink="/home" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>{{ '放系統名' }}</b></span>
+      <span class="logo-mini"><b>{{ systemName }}</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">
                         <!--<img src="<%= ResolveUrl("images/LOGO.png") %>" style="zoom: 20%; float: left; width: 500px; margin-top: -121px;" />-->
-                        <span>{{ '放系統名' }}</span></span>
+                        <span>{{ systemName }}</span></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -34,7 +34,7 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#"><i class="fa fa-fw fa-power-off"></i>登出</a>
+                <a [routerLink]="['/login']"><i class="fa fa-fw fa-power-off"></i>登出</a>
               </li>
             </ul>
           </li>

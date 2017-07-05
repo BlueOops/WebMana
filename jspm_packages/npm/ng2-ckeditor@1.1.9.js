@@ -1,0 +1,1 @@
+module.exports = require("npm:ng2-ckeditor@1.1.9/lib/index.js");

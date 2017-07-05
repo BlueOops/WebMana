@@ -1,3 +1,5 @@
+import { MenuComponent } from './webmana/menu/menu.component';
+import { WebpageComponent } from './webmana/Webpage/Webpage.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './_comm/auth.guard';

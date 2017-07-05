@@ -1,6 +1,6 @@
 {
-  "/garydata": {
-    "target": "http://www.drinsurance.com.tw/api",
+  "/websiteapi_back": {
+    "target": "http://218.161.50.223",
     "secure": false
   }
 }
